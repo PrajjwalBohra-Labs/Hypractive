@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Hypractive",
+    "slug": "hypractive",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#F7F6F2",
+    "splash": {
+      "backgroundColor": "#F7F6F2"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.yourname.hypractive"
+    },
+    "android": {
+      "package": "com.yourname.hypractive",
+      "adaptiveIcon": {
+        "backgroundColor": "#F7F6F2"
+      }
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "color": "#141414"
+        }
+      ]
+    ]
+  }
+}

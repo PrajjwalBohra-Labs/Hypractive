@@ -2,10 +2,7 @@
 
 **New here? Start with `SETUP.md`** — step-by-step install and run instructions.
 
-**Want the full design?** See `ARCHITECTURE.md` — product spec, data model,
-screen map, and the phased build plan this project follows. (Note: written
-under the project's original working name; content still applies, naming
-in that doc hasn't been fully swept for the rebrand yet.)
+**Want the full design?** See you in v2. 
 
 ## Build status
 

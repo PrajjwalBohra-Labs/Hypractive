@@ -83,7 +83,7 @@ export function LogRunScreen({ navigation }: any) {
         index += 1;
       }
 
-      navigation.replace('RunSessionDetail', { runSessionId: session.id });
+      navigation.replace('RunSessionDetail', { runSessionId: session.id, justSaved: true });
     } finally {
       setSaving(false);
     }

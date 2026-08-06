@@ -863,11 +863,11 @@ Scope: Home screen restructure plus supporting reusable components, inspired by 
 | Item | Status |
 |---|---|
 | Navigation label rewrite (§13.2 table) | **Done** |
-| Empty state copy + random-pick logic | Not started (two inline empty-state lines were updated as a natural byproduct of the label pass — Running dashboard's "no runs" preview text and the Home greeting — but the full random-pick system across Run/Workout History screens is still separate work) |
-| Achievement messages wired into Workout Summary + Run Session Detail | Not started |
-| `RoastCard` component + placement | Not started |
-| About screen restructure (4 subsections) | Not started |
-| Home dashboard redesign (hero, quick actions, horizontal recent activity) | Not started |
+| Empty state copy + random-pick logic | **Done** — `app/content/roastCopy.ts` holds the shared pools; wired into Run History, Workout History, and the Running dashboard's inline preview. Exercise Library's empty state was deliberately left alone — the provided copy is about *workouts*/*runs*, not an empty library, and would read oddly there. Search-no-results states also stay functional/clear, not randomized, since that's a different situation (you have data, the search just didn't match) |
+| Achievement messages wired into Workout Summary + Run Session Detail | **Done** — verified both screens correctly pick a random line; Run Session Detail only shows it right after logging (via a `justSaved` route param), not on every revisit |
+| `RoastCard` component + placement | **Done** — new evergreen `ROAST_LINES` pool (distinct from the state-specific empty/achievement lines) added to `roastCopy.ts`; placed on Home, Running dashboard, and Strength dashboard |
+| About screen restructure (4 subsections) | **Done** — "The Cult Manifesto" (mission), "Why This Exists" (rationale), "Meet Your Tormentor" (the local-login disclosure, tone reframed but the factual disclosure kept intact and accurate), "Terms of Suffering" (data/backup policy). Font credit kept as a small 5th "The Fine Print" footer since it's a license attribution, not one of the four requested sections |
+| Home dashboard redesign (hero, quick actions, horizontal recent activity) | **Done** — hero (greeting + This Week stat card), primary CTA row, `RoastCard`, horizontal-scrolling Recent Activity row mixing runs and workouts by date (new `getRecentActivity` in `statsService.ts`, new `RecentActivityCard`/`QuickActionCard` components), quick-action grid linking to Statistics/History/Library. Screen is now scrollable (was a fixed View before), needed once regardless of the separate responsive-audit item |
 | Glassmorphism treatment (`expo-blur`) | Not started |
 | Icon system (`@expo/vector-icons`) | Not started |
 | Loading skeletons | Not started |

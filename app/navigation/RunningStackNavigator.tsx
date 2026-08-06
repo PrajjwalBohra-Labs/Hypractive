@@ -4,6 +4,7 @@ import { View, Text, FlatList, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type } from '@/theme/tokens';
 import { Button } from '@/components/common/Button';
+import { RoastCard } from '@/components/common/RoastCard';
 import { useUserStore } from '@/state/userStore';
 import * as runSessionRepository from '@/db/repositories/runSessionRepository';
 import { metersToDisplayDistance, distanceUnitLabel, formatPace } from '@/services/unitConversionService';
@@ -12,12 +13,14 @@ import { RunSessionDetailScreen } from '@/screens/running/RunSessionDetailScreen
 import { RunHistoryScreen } from '@/screens/running/RunHistoryScreen';
 import { RunningStatisticsScreen } from '@/screens/running/RunningStatisticsScreen';
 import type { RunSession } from '@/types/entities';
+import { NO_RUNS_LINES, pickRandom } from '@/content/roastCopy';
 
 const Stack = createNativeStackNavigator();
 
 function RunningDashboardScreen({ navigation }: any) {
   const user = useUserStore((s) => s.user);
   const [recentRuns, setRecentRuns] = useState<RunSession[]>([]);
+  const [emptyLine] = useState(() => pickRandom(NO_RUNS_LINES));
 
   const load = useCallback(async () => {
     if (!user) return;
@@ -45,6 +48,8 @@ function RunningDashboardScreen({ navigation }: any) {
         style={{ marginTop: spacing.sm }}
       />
 
+      <RoastCard />
+
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: spacing.xl, marginBottom: spacing.sm }}>
         <Text style={type.eyebrow}>RECENT ESCAPES</Text>
         <Pressable onPress={() => navigation.navigate('RunHistory')}>
@@ -53,7 +58,7 @@ function RunningDashboardScreen({ navigation }: any) {
       </View>
 
       {recentRuns.length === 0 ? (
-        <Text style={type.bodyMuted}>You've successfully avoided cardio.</Text>
+        <Text style={type.bodyMuted}>{emptyLine}</Text>
       ) : (
         <FlatList
           data={recentRuns}

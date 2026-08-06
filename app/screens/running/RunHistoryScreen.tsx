@@ -3,6 +3,7 @@ import { View, Text, FlatList, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type } from '@/theme/tokens';
 import { EmptyState } from '@/components/lists/EmptyState';
+import { NO_RUNS_LINES, pickRandom } from '@/content/roastCopy';
 import { useUserStore } from '@/state/userStore';
 import * as runSessionRepository from '@/db/repositories/runSessionRepository';
 import { metersToDisplayDistance, distanceUnitLabel, formatPace } from '@/services/unitConversionService';
@@ -15,6 +16,7 @@ export function RunHistoryScreen({ navigation }: any) {
   const user = useUserStore((s) => s.user);
   const [runs, setRuns] = useState<RunSession[]>([]);
   const [range, setRange] = useState<RangeFilter>('all');
+  const [emptyLine] = useState(() => pickRandom(NO_RUNS_LINES));
 
   const load = useCallback(async () => {
     if (!user) return;
@@ -51,7 +53,7 @@ export function RunHistoryScreen({ navigation }: any) {
       </View>
 
       {runs.length === 0 ? (
-        <EmptyState message="No runs logged in this range." />
+        <EmptyState message={emptyLine} />
       ) : (
         <FlatList
           data={runs}

@@ -1,12 +1,16 @@
 import React, { useCallback, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, type } from '@/theme/tokens';
 import { Card } from '@/components/common/Card';
 import { Button } from '@/components/common/Button';
 import { GlossSheen } from '@/components/common/GlossSheen';
+import { RoastCard } from '@/components/common/RoastCard';
+import { RecentActivityCard } from '@/components/common/RecentActivityCard';
+import { QuickActionCard } from '@/components/common/QuickActionCard';
 import { useUserStore } from '@/state/userStore';
 import * as statsService from '@/services/statsService';
+import type { RecentActivityEntry } from '@/services/statsService';
 import { metersToDisplayDistance, distanceUnitLabel, kgToDisplayWeight, weightUnitLabel } from '@/services/unitConversionService';
 import { currentWeekRange } from '@/utils/dateUtils';
 
@@ -15,6 +19,7 @@ export function HomeDashboardScreen({ navigation }: any) {
   const [weekDistanceM, setWeekDistanceM] = useState(0);
   const [weekVolumeKg, setWeekVolumeKg] = useState(0);
   const [weekSessionCount, setWeekSessionCount] = useState(0);
+  const [recentActivity, setRecentActivity] = useState<RecentActivityEntry[]>([]);
 
   const load = useCallback(async () => {
     if (!user) return;
@@ -24,6 +29,7 @@ export function HomeDashboardScreen({ navigation }: any) {
     setWeekDistanceM(runningSummary.totalDistanceM);
     setWeekVolumeKg(workoutSummary.totalVolumeKg);
     setWeekSessionCount(runningSummary.runCount + workoutSummary.sessionCount);
+    setRecentActivity(await statsService.getRecentActivity(user.id, 8));
   }, [user]);
 
   useFocusEffect(
@@ -35,8 +41,17 @@ export function HomeDashboardScreen({ navigation }: any) {
   if (!user) return null;
   const unit = user.unitPreference;
 
+  const openActivity = (entry: RecentActivityEntry) => {
+    if (entry.type === 'run') {
+      navigation.navigate('Running', { screen: 'RunSessionDetail', params: { runSessionId: entry.id } });
+    } else {
+      navigation.navigate('Strength', { screen: 'WorkoutSessionDetail', params: { sessionId: entry.id } });
+    }
+  };
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={{ padding: spacing.lg, paddingBottom: spacing.xxl }}>
+      {/* Hero */}
       <Text style={type.display}>{`Ah yes, ${user.displayName}. Your excuses are waiting.`}</Text>
 
       <Card style={{ marginTop: spacing.lg, overflow: 'hidden' }}>
@@ -66,6 +81,7 @@ export function HomeDashboardScreen({ navigation }: any) {
         )}
       </Card>
 
+      {/* Primary CTAs */}
       <View style={styles.actions}>
         <Button
           label="File Your Escape"
@@ -79,13 +95,56 @@ export function HomeDashboardScreen({ navigation }: any) {
           style={styles.actionButton}
         />
       </View>
-    </View>
+
+      <RoastCard />
+
+      {/* Horizontal recent activity */}
+      <Text style={[type.eyebrow, { marginBottom: spacing.md }]}>RECENT DAMAGE</Text>
+      {recentActivity.length === 0 ? (
+        <Text style={type.bodyMuted}>Nothing yet. The void is patient.</Text>
+      ) : (
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -spacing.lg }}>
+          <View style={{ flexDirection: 'row', paddingHorizontal: spacing.lg }}>
+            {recentActivity.map((entry) => (
+              <RecentActivityCard
+                key={`${entry.type}-${entry.id}`}
+                entry={entry}
+                unit={unit}
+                onPress={() => openActivity(entry)}
+              />
+            ))}
+          </View>
+        </ScrollView>
+      )}
+
+      {/* Quick action grid */}
+      <Text style={[type.eyebrow, { marginTop: spacing.xl, marginBottom: spacing.md }]}>QUICK ESCAPES</Text>
+      <View style={styles.grid}>
+        <QuickActionCard
+          label="Evidence of Suffering"
+          onPress={() => navigation.navigate('Running', { screen: 'RunningStatistics' })}
+        />
+        <QuickActionCard
+          label="Damage Report"
+          onPress={() => navigation.navigate('Strength', { screen: 'WorkoutStatistics' })}
+        />
+        <QuickActionCard
+          label="Trauma Archive"
+          onPress={() => navigation.navigate('Strength', { screen: 'WorkoutHistory' })}
+        />
+        <QuickActionCard
+          label="Methods of Suffering"
+          onPress={() => navigation.navigate('Strength', { screen: 'ExerciseLibraryList' })}
+        />
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.background, padding: spacing.lg },
+  container: { flex: 1, backgroundColor: colors.background },
   statRow: { flexDirection: 'row', justifyContent: 'space-between', marginTop: spacing.md },
   actions: { flexDirection: 'row', gap: spacing.md, marginTop: spacing.xl },
   actionButton: { flex: 1 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
 });

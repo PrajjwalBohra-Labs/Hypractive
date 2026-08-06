@@ -3,6 +3,7 @@ import { View, Text, FlatList, Pressable, TextInput, StyleSheet } from 'react-na
 import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type } from '@/theme/tokens';
 import { EmptyState } from '@/components/lists/EmptyState';
+import { NO_WORKOUTS_LINES, pickRandom } from '@/content/roastCopy';
 import { useUserStore } from '@/state/userStore';
 import * as workoutSessionRepository from '@/db/repositories/workoutSessionRepository';
 import type { WorkoutSessionSummary } from '@/db/repositories/workoutSessionRepository';
@@ -18,6 +19,7 @@ export function WorkoutHistoryScreen({ navigation }: any) {
   const [rows, setRows] = useState<RowData[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
+  const [emptyLine] = useState(() => pickRandom(NO_WORKOUTS_LINES));
 
   const load = useCallback(async () => {
     if (!user) return;
@@ -55,7 +57,7 @@ export function WorkoutHistoryScreen({ navigation }: any) {
       />
 
       {!loading && rows.length === 0 ? (
-        <EmptyState message={search ? 'No workouts match that exercise.' : 'No workouts logged yet.'} />
+        <EmptyState message={search ? 'No workouts match that exercise.' : emptyLine} />
       ) : (
         <FlatList
           data={rows}

@@ -13,14 +13,17 @@ import {
   formatPace,
   formatDuration,
 } from '@/services/unitConversionService';
+import { ACHIEVEMENT_LINES, pickRandom } from '@/content/roastCopy';
 import type { RunSession, PaceSplit } from '@/types/entities';
 
 export function RunSessionDetailScreen({ route }: any) {
   const runSessionId: string = route.params.runSessionId;
+  const justSaved: boolean = route.params?.justSaved ?? false;
   const user = useUserStore((s) => s.user);
   const [session, setSession] = useState<RunSession | null>(null);
   const [splits, setSplits] = useState<PaceSplit[]>([]);
   const [priorPace, setPriorPace] = useState<number | null>(null);
+  const [achievementLine] = useState(() => (justSaved ? pickRandom(ACHIEVEMENT_LINES) : null));
 
   const load = useCallback(async () => {
     if (!user) return;
@@ -48,6 +51,7 @@ export function RunSessionDetailScreen({ route }: any) {
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ padding: spacing.lg }}>
       <Text style={type.display}>{session.date}</Text>
+      {achievementLine && <Text style={[type.bodyMuted, { marginTop: spacing.xs }]}>{achievementLine}</Text>}
 
       <Card style={{ marginTop: spacing.lg }}>
         <View style={styles.statRow}>

@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, Text, StyleSheet } from 'react-native';
 import { colors, spacing, type } from '@/theme/tokens';
 import { Button } from '@/components/common/Button';
+import { RoastCard } from '@/components/common/RoastCard';
 import { ExerciseLibraryListScreen } from '@/screens/strength/ExerciseLibraryListScreen';
 import { ExerciseEditorScreen } from '@/screens/strength/ExerciseEditorScreen';
 import { ExerciseDetailScreen } from '@/screens/strength/ExerciseDetailScreen';
@@ -29,6 +30,8 @@ function StrengthDashboardScreen({ navigation }: any) {
         <Button label="Trauma Archive" variant="secondary" onPress={() => navigation.navigate('WorkoutHistory')} />
         <Button label="Damage Report" variant="secondary" onPress={() => navigation.navigate('WorkoutStatistics')} />
       </View>
+
+      <RoastCard />
     </View>
   );
 }

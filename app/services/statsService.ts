@@ -191,3 +191,61 @@ export async function getExerciseVolumeOverTime(exerciseId: string): Promise<Cha
   );
   return rows.map((r) => ({ x: r.date, y: r.volume_kg }));
 }
+
+// ---------- Combined recent activity (Home dashboard) ----------
+
+export type RecentActivityEntry =
+  | { type: 'run'; id: string; date: string; distanceM: number; avgPaceSPerKm: number }
+  | { type: 'workout'; id: string; date: string; exerciseCount: number; totalVolumeKg: number };
+
+/**
+ * Runs and finished workout sessions, interleaved by date (most recent
+ * first), for the Home dashboard's horizontal "recent activity" row.
+ * Raw data only -- the screen formats it for the user's unit preference.
+ */
+export async function getRecentActivity(userId: string, limit: number): Promise<RecentActivityEntry[]> {
+  const db = await getDb();
+
+  const runRows = await db.getAllAsync<{ id: string; date: string; distance_m: number; avg_pace_s_per_km: number; created_at: string }>(
+    `SELECT id, date, distance_m, avg_pace_s_per_km, created_at FROM run_sessions
+     WHERE user_id = ? ORDER BY date DESC, created_at DESC LIMIT ?;`,
+    [userId, limit]
+  );
+  const workoutRows = await db.getAllAsync<{ id: string; date: string; started_at: string }>(
+    `SELECT id, date, started_at FROM workout_sessions
+     WHERE user_id = ? AND finished_at IS NOT NULL ORDER BY date DESC, started_at DESC LIMIT ?;`,
+    [userId, limit]
+  );
+
+  const runs: (RecentActivityEntry & { sortKey: string })[] = runRows.map((r) => ({
+    type: 'run',
+    id: r.id,
+    date: r.date,
+    distanceM: r.distance_m,
+    avgPaceSPerKm: r.avg_pace_s_per_km,
+    sortKey: `${r.date}T${r.created_at}`,
+  }));
+
+  const workouts: (RecentActivityEntry & { sortKey: string })[] = [];
+  for (const w of workoutRows) {
+    const summary = await db.getFirstAsync<{ exercise_count: number; total_volume: number }>(
+      `SELECT COUNT(DISTINCT exercise_id) as exercise_count,
+              COALESCE(SUM(CASE WHEN weight_kg IS NULL THEN 0 ELSE weight_kg * reps END), 0) as total_volume
+       FROM logged_sets WHERE workout_session_id = ?;`,
+      [w.id]
+    );
+    workouts.push({
+      type: 'workout',
+      id: w.id,
+      date: w.date,
+      exerciseCount: summary?.exercise_count ?? 0,
+      totalVolumeKg: summary?.total_volume ?? 0,
+      sortKey: `${w.date}T${w.started_at}`,
+    });
+  }
+
+  return [...runs, ...workouts]
+    .sort((a, b) => (a.sortKey < b.sortKey ? 1 : -1))
+    .slice(0, limit)
+    .map(({ sortKey, ...entry }) => entry as RecentActivityEntry);
+}

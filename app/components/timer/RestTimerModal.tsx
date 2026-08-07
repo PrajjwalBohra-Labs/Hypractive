@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, StyleSheet, Pressable, TextInput } from 'react-native';
+import { BlurView } from 'expo-blur';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
 import { Button } from '@/components/common/Button';
 import { useTimerStore, getRemainingSeconds } from '@/state/timerStore';
@@ -46,7 +47,7 @@ export function RestTimerModal({ visible, onClose, presets }: RestTimerModalProp
 
   return (
     <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose}>
-      <View style={styles.backdrop}>
+      <BlurView intensity={40} tint="dark" style={styles.backdrop}>
         <View style={styles.sheet}>
           <Text style={type.title}>Rest Timer</Text>
 
@@ -104,13 +105,13 @@ export function RestTimerModal({ visible, onClose, presets }: RestTimerModalProp
             <Text style={type.bodyMuted}>Close</Text>
           </Pressable>
         </View>
-      </View>
+      </BlurView>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  backdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'flex-end' },
+  backdrop: { flex: 1, justifyContent: 'flex-end' },
   sheet: { backgroundColor: colors.surface, borderTopLeftRadius: radius.lg, borderTopRightRadius: radius.lg, padding: spacing.xl },
   countdown: { ...type.display, fontSize: 48, textAlign: 'center', marginVertical: spacing.lg },
   adjustRow: { flexDirection: 'row', gap: spacing.md, justifyContent: 'center' },

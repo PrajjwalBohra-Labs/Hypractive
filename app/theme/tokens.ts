@@ -25,6 +25,7 @@ export const colors = {
   accent: '#141414', // black — primary buttons, active tab, links
   accentPressed: '#3A3936',
   sheen: 'rgba(20, 20, 20, 0.06)', // translucent black — gloss hairlines/shadows only, never text
+  glassTint: 'rgba(247, 246, 242, 0.7)', // translucent pearl-white — blur overlays only (tab bar, modal backdrops)
 } as const;
 
 export const spacing = {

@@ -4,6 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type } from '@/theme/tokens';
 import { Card } from '@/components/common/Card';
 import { GlossSheen } from '@/components/common/GlossSheen';
+import { SkeletonStatCard } from '@/components/common/SkeletonStatCard';
 import { TrendChart } from '@/components/charts/TrendChart';
 import { useUserStore } from '@/state/userStore';
 import * as statsService from '@/services/statsService';
@@ -41,8 +42,19 @@ export function WorkoutStatisticsScreen() {
     }, [load])
   );
 
-  if (!user || !summary) return null;
+  if (!user) return null;
   const unit = user.unitPreference;
+
+  if (!summary) {
+    return (
+      <View style={[styles.container, { padding: spacing.lg }]}>
+        <Text style={type.display}>Workout Statistics</Text>
+        <View style={{ marginTop: spacing.lg }}>
+          <SkeletonStatCard />
+        </View>
+      </View>
+    );
+  }
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ padding: spacing.lg }}>

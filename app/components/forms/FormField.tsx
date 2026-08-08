@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet, KeyboardTypeOptions } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
 
 interface FormFieldProps {
@@ -25,7 +26,12 @@ export function FormField({ label, value, onChangeText, error, placeholder, keyb
         keyboardType={keyboardType}
         multiline={multiline}
       />
-      {error ? <Text style={styles.error}>{'\u26A0 '}{error}</Text> : null}
+      {error ? (
+        <View style={styles.errorRow}>
+          <Ionicons name="warning-outline" size={14} color={colors.textPrimary} />
+          <Text style={styles.error}>{error}</Text>
+        </View>
+      ) : null}
     </View>
   );
 }
@@ -46,5 +52,6 @@ const styles = StyleSheet.create({
   },
   multiline: { minHeight: 80, textAlignVertical: 'top' },
   inputError: { borderWidth: 2 },
-  error: { ...type.caption, fontFamily: fonts.semibold, color: colors.textPrimary, marginTop: spacing.xs, textTransform: 'none' },
+  errorRow: { flexDirection: 'row', alignItems: 'center', marginTop: spacing.xs, gap: 4 },
+  error: { ...type.caption, fontFamily: fonts.semibold, color: colors.textPrimary, textTransform: 'none' },
 });

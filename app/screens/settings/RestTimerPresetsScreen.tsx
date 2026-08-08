@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { View, Text, FlatList, Pressable, TextInput, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
 import { EmptyState } from '@/components/lists/EmptyState';
@@ -71,8 +72,9 @@ export function RestTimerPresetsScreen() {
           renderItem={({ item }) => (
             <View style={styles.row}>
               <Text style={type.body}>{item.label} — {item.durationS}s</Text>
-              <Pressable onPress={() => handleDelete(item.id)}>
-                <Text style={{ color: colors.textPrimary, fontFamily: fonts.semibold }}>2715 Delete</Text>
+              <Pressable onPress={() => handleDelete(item.id)} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Ionicons name="close-circle-outline" size={16} color={colors.textPrimary} />
+                <Text style={{ color: colors.textPrimary, fontFamily: fonts.semibold, marginLeft: 4 }}>Delete</Text>
               </Pressable>
             </View>
           )}

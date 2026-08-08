@@ -1,30 +1,34 @@
 /**
- * Design tokens — Hypractive, pearl white & dark black.
+ * Design tokens — Hypractive.
  *
- * Deliberately a strict two-color system (pearl white, dark black) plus
- * tonal variation within each (soft grays) for depth, elevation, and
- * gloss — no third accent hue is introduced anywhere. Functional states
- * that would traditionally use color (form errors, destructive actions,
- * "increase/decrease" deltas) are instead expressed through weight,
- * symbols (▲ ▼ ✕ !), and borders, keeping the palette honest.
+ * Palette: pearl-white background/surfaces, a black/gray text-and-border
+ * hierarchy, and one warm accent (rust/terracotta) for primary actions,
+ * active states, and icons. This supersedes the earlier strict
+ * two-color-only rule — that was right for the previous palette, but
+ * this one has a real accent color by design.
  *
- * Cards are pearl/white fill with a crisp dark border and soft shadow
- * (not solid black fill) — this keeps text color uniform everywhere
- * (always dark-on-light), which is both simpler and safer than
- * maintaining two text-color contexts across every screen.
+ * Functional states that don't need color (form errors, destructive
+ * actions, progressive-overload deltas) still use weight and symbols
+ * (▲ ▼ ✕ !) rather than color, since that choice was about clarity and
+ * accessibility, not just "we had no color available" — it stands on
+ * its own regardless of the palette above it.
+ *
+ * Cards are pearl/white fill with a crisp border and soft shadow (not
+ * solid dark fill) — keeps text color uniform everywhere (always
+ * dark-on-light), avoiding a whole class of contrast bugs.
  */
 
 export const colors = {
   background: '#F7F6F2', // pearl white — soft, warm, not stark white
   surface: '#FFFFFF', // card fill — slightly brighter than the page for gentle depth
   surfaceRaised: '#F1EFEA', // input fields — subtly distinct from card white
-  border: '#141414', // dark black — card borders, dividers
-  textPrimary: '#141414',
-  textSecondary: '#5A5957',
-  textMuted: '#8B8985',
-  accent: '#141414', // black — primary buttons, active tab, links
-  accentPressed: '#3A3936',
-  sheen: 'rgba(20, 20, 20, 0.06)', // translucent black — gloss hairlines/shadows only, never text
+  border: '#000000', // card borders, dividers
+  textPrimary: '#000000',
+  textSecondary: '#464646',
+  textMuted: '#9C9A9A',
+  accent: '#A35E47', // rust/terracotta — primary buttons, active tab, icons, links
+  accentPressed: '#7A4635', // darkened accent, pressed state
+  sheen: 'rgba(0, 0, 0, 0.06)', // translucent black — gloss hairlines/shadows only, never text
   glassTint: 'rgba(247, 246, 242, 0.7)', // translucent pearl-white — blur overlays only (tab bar, modal backdrops)
 } as const;
 

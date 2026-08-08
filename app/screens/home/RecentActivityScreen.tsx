@@ -3,6 +3,7 @@ import { View, Text, FlatList, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type } from '@/theme/tokens';
 import { EmptyState } from '@/components/lists/EmptyState';
+import { SkeletonListRow } from '@/components/common/SkeletonListRow';
 import { useUserStore } from '@/state/userStore';
 import * as statsService from '@/services/statsService';
 import type { RecentActivityEntry } from '@/services/statsService';
@@ -47,7 +48,11 @@ export function RecentActivityScreen({ navigation }: any) {
     <View style={styles.container}>
       <Text style={type.display}>Recent Activity</Text>
 
-      {!loading && activity.length === 0 ? (
+      {loading ? (
+        <View style={{ marginTop: spacing.lg }}>
+          <SkeletonListRow />
+        </View>
+      ) : activity.length === 0 ? (
         <EmptyState message="Nothing here. The void is patient." />
       ) : (
         <FlatList

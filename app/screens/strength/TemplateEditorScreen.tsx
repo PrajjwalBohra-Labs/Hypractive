@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, ScrollView, TextInput, Pressable, Modal, FlatList, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
 import { FormField } from '@/components/forms/FormField';
@@ -128,9 +129,12 @@ export function TemplateEditorScreen({ route, navigation }: any) {
           <View style={styles.exerciseRowHeader}>
             <Text style={type.body}>{exerciseNames[entry.exerciseId] ?? '\u2026'}</Text>
             <View style={styles.rowActions}>
-              <Pressable onPress={() => handleMove(index, -1)}><Text style={styles.moveText}>▲</Text></Pressable>
-              <Pressable onPress={() => handleMove(index, 1)}><Text style={styles.moveText}>▼</Text></Pressable>
-              <Pressable onPress={() => handleRemoveEntry(entry.id)}><Text style={{ color: colors.textPrimary, fontFamily: fonts.semibold }}>2715 Remove</Text></Pressable>
+              <Pressable onPress={() => handleMove(index, -1)}><Ionicons name="chevron-up-circle-outline" size={20} color={colors.textSecondary} /></Pressable>
+              <Pressable onPress={() => handleMove(index, 1)}><Ionicons name="chevron-down-circle-outline" size={20} color={colors.textSecondary} /></Pressable>
+              <Pressable onPress={() => handleRemoveEntry(entry.id)} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Ionicons name="close-circle-outline" size={16} color={colors.textPrimary} />
+                <Text style={{ color: colors.textPrimary, fontFamily: fonts.semibold, marginLeft: 4 }}>Remove</Text>
+              </Pressable>
             </View>
           </View>
           <View style={styles.targetRow}>
@@ -195,7 +199,6 @@ const styles = StyleSheet.create({
   },
   exerciseRowHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   rowActions: { flexDirection: 'row', gap: spacing.md, alignItems: 'center' },
-  moveText: { color: colors.textSecondary, fontSize: 16 },
   targetRow: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.sm },
   targetInput: {
     flex: 1,

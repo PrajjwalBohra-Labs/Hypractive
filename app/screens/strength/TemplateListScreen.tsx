@@ -3,6 +3,7 @@ import { View, Text, FlatList, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
 import { EmptyState } from '@/components/lists/EmptyState';
+import { SkeletonListRow } from '@/components/common/SkeletonListRow';
 import { useUserStore } from '@/state/userStore';
 import * as templateRepository from '@/db/repositories/templateRepository';
 import type { CustomWorkoutTemplate } from '@/types/entities';
@@ -34,7 +35,9 @@ export function TemplateListScreen({ navigation }: any) {
         </Pressable>
       </View>
 
-      {!loading && templates.length === 0 ? (
+      {loading ? (
+        <SkeletonListRow />
+      ) : templates.length === 0 ? (
         <EmptyState
           message="No workout templates yet. Build one to reuse it every time you train."
           actionLabel="+ New Template"

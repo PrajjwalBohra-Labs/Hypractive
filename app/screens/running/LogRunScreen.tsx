@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
 import { FormField } from '@/components/forms/FormField';
 import { NumericInput } from '@/components/forms/NumericInput';
@@ -140,8 +141,9 @@ export function LogRunScreen({ navigation }: any) {
                   onChangeText={(v) => updateSplitRow(split.key, 'seconds', v)}
                 />
               </View>
-              <Pressable onPress={() => removeSplitRow(split.key)}>
-                <Text style={{ color: colors.textPrimary, fontFamily: fonts.semibold, marginTop: spacing.xs }}>2715 Remove split</Text>
+              <Pressable onPress={() => removeSplitRow(split.key)} style={styles.removeRow}>
+                <Ionicons name="close-circle-outline" size={16} color={colors.textPrimary} />
+                <Text style={{ color: colors.textPrimary, fontFamily: fonts.semibold, marginLeft: 4 }}>Remove split</Text>
               </Pressable>
             </View>
           ))}
@@ -168,4 +170,5 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   errorText: { color: colors.textPrimary, fontFamily: fonts.semibold, marginTop: spacing.xs },
+  removeRow: { flexDirection: 'row', alignItems: 'center', marginTop: spacing.xs },
 });

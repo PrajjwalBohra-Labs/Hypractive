@@ -3,6 +3,7 @@ import { View, Text, FlatList, Pressable, TextInput, StyleSheet } from 'react-na
 import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
 import { EmptyState } from '@/components/lists/EmptyState';
+import { SkeletonListRow } from '@/components/common/SkeletonListRow';
 import { useUserStore } from '@/state/userStore';
 import * as exerciseRepository from '@/db/repositories/exerciseRepository';
 import type { Exercise } from '@/types/entities';
@@ -49,7 +50,9 @@ export function ExerciseLibraryListScreen({ navigation }: any) {
         />
       ) : null}
 
-      {!loading && exercises.length === 0 && search.length === 0 ? (
+      {loading ? (
+        <SkeletonListRow />
+      ) : exercises.length === 0 && search.length === 0 ? (
         <EmptyState
           message="No exercises yet. Add your first exercise to start building your library."
           actionLabel="+ New Exercise"

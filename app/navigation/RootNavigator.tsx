@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
+import { Ionicons } from '@expo/vector-icons';
 import { colors } from '@/theme/tokens';
 import { HomeStackNavigator } from './HomeStackNavigator';
 import { RunningStackNavigator } from './RunningStackNavigator';
@@ -36,10 +37,47 @@ export function RootNavigator() {
           tabBarInactiveTintColor: colors.textMuted,
         }}
       >
-        <Tab.Screen name="Home" component={HomeStackNavigator} options={{ tabBarLabel: 'The Void' }} />
-        <Tab.Screen name="Running" component={RunningStackNavigator} options={{ tabBarLabel: 'Escape Consequences' }} />
-        <Tab.Screen name="Strength" component={StrengthStackNavigator} options={{ tabBarLabel: 'Gravity Negotiations' }} />
-        <Tab.Screen name="SettingsTab" component={SettingsStackNavigator} options={{ title: 'Self-Sabotage', tabBarLabel: 'Self-Sabotage' }} />
+        <Tab.Screen
+          name="Home"
+          component={HomeStackNavigator}
+          options={{
+            tabBarLabel: 'The Void',
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons name={focused ? 'moon' : 'moon-outline'} size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Running"
+          component={RunningStackNavigator}
+          options={{
+            tabBarLabel: 'Escape Consequences',
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons name={focused ? 'footsteps' : 'footsteps-outline'} size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Strength"
+          component={StrengthStackNavigator}
+          options={{
+            tabBarLabel: 'Gravity Negotiations',
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons name={focused ? 'barbell' : 'barbell-outline'} size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="SettingsTab"
+          component={SettingsStackNavigator}
+          options={{
+            title: 'Self-Sabotage',
+            tabBarLabel: 'Self-Sabotage',
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons name={focused ? 'settings' : 'settings-outline'} size={size} color={color} />
+            ),
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );

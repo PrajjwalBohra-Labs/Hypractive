@@ -1,21 +1,24 @@
 import React from 'react';
-import { Pressable, Text, StyleSheet, ActivityIndicator, ViewStyle } from 'react-native';
+import { Pressable, Text, View, StyleSheet, ActivityIndicator, ViewStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
 
 interface ButtonProps {
   label: string;
   onPress: () => void;
   variant?: 'primary' | 'secondary' | 'danger';
+  icon?: keyof typeof Ionicons.glyphMap;
   disabled?: boolean;
   loading?: boolean;
   style?: ViewStyle;
 }
 
-export function Button({ label, onPress, variant = 'primary', disabled, loading, style }: ButtonProps) {
+export function Button({ label, onPress, variant = 'primary', icon, disabled, loading, style }: ButtonProps) {
   const isPrimary = variant === 'primary';
   const isSecondary = variant === 'secondary';
   const isDanger = variant === 'danger';
+  const labelColor = isPrimary ? colors.background : colors.textPrimary;
 
   return (
     <Pressable
@@ -40,18 +43,13 @@ export function Button({ label, onPress, variant = 'primary', disabled, loading,
         />
       )}
       {loading ? (
-        <ActivityIndicator color={isPrimary ? colors.background : colors.textPrimary} />
+        <ActivityIndicator color={labelColor} />
       ) : (
-        <Text
-          style={[
-            styles.label,
-            isPrimary && { color: colors.background },
-            isSecondary && { color: colors.textPrimary },
-            isDanger && { color: colors.textPrimary },
-          ]}
-        >
-          {isDanger ? `\u2715 ${label}` : label}
-        </Text>
+        <View style={styles.content}>
+          {icon && <Ionicons name={icon} size={18} color={labelColor} style={styles.icon} />}
+          {isDanger && <Ionicons name="close" size={18} color={labelColor} style={styles.icon} />}
+          <Text style={[styles.label, { color: labelColor }]}>{label}</Text>
+        </View>
       )}
     </Pressable>
   );
@@ -65,6 +63,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
+  },
+  content: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    marginRight: spacing.xs,
   },
   primaryShadow: {
     shadowColor: colors.accent,

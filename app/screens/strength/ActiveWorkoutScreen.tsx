@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Pressable, Modal, FlatList, StyleSheet, Alert } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
 import { Button } from '@/components/common/Button';
 import { NumericInput } from '@/components/forms/NumericInput';
@@ -102,9 +103,14 @@ export function ActiveWorkoutScreen({ route, navigation }: any) {
               ))}
 
               {overload && (
-                <Text style={[type.caption, { marginTop: spacing.xs, fontFamily: fonts.semibold, color: colors.textPrimary }]}>
-                  {overloadLabel(overload)}
-                </Text>
+                <View style={styles.overloadRow}>
+                  {overloadIcon(overload.weightClassification) && (
+                    <Ionicons name={overloadIcon(overload.weightClassification)!} size={14} color={colors.textPrimary} />
+                  )}
+                  <Text style={[type.caption, { fontFamily: fonts.semibold, color: colors.textPrimary, marginLeft: 4 }]}>
+                    {overloadLabel(overload)}
+                  </Text>
+                </View>
               )}
 
               <View style={styles.inputRow}>
@@ -122,7 +128,12 @@ export function ActiveWorkoutScreen({ route, navigation }: any) {
                 />
               </View>
               {fieldErrors[exerciseId] ? (
-                <Text style={{ color: colors.textPrimary, fontFamily: fonts.semibold, marginTop: spacing.xs }}>26A0 {fieldErrors[exerciseId]}</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: spacing.xs }}>
+                  <Ionicons name="warning-outline" size={16} color={colors.textPrimary} />
+                  <Text style={{ color: colors.textPrimary, fontFamily: fonts.semibold, marginLeft: 4 }}>
+                    {fieldErrors[exerciseId]}
+                  </Text>
+                </View>
               ) : null}
 
               <View style={styles.rowButtons}>
@@ -173,11 +184,17 @@ export function ActiveWorkoutScreen({ route, navigation }: any) {
 function overloadLabel(o: { weightClassification: string; weightDeltaKg: number | null }): string {
   switch (o.weightClassification) {
     case 'first_time': return 'First time logging this exercise';
-    case 'increase': return `\u25B2 +${o.weightDeltaKg?.toFixed(1)}kg vs. previous best`;
+    case 'increase': return `+${o.weightDeltaKg?.toFixed(1)}kg vs. previous best`;
     case 'equal': return 'Matches previous best';
-    case 'decrease': return `\u25BC ${o.weightDeltaKg?.toFixed(1)}kg vs. previous best`;
+    case 'decrease': return `${o.weightDeltaKg?.toFixed(1)}kg vs. previous best`;
     default: return '';
   }
+}
+
+function overloadIcon(classification: string): keyof typeof Ionicons.glyphMap | null {
+  if (classification === 'increase') return 'arrow-up-circle-outline';
+  if (classification === 'decrease') return 'arrow-down-circle-outline';
+  return null;
 }
 
 const styles = StyleSheet.create({
@@ -191,6 +208,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   inputRow: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.sm },
+  overloadRow: { flexDirection: 'row', alignItems: 'center', marginTop: spacing.xs },
   rowButtons: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.sm },
   footer: {
     position: 'absolute',

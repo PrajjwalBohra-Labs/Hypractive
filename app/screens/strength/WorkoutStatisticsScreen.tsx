@@ -11,6 +11,7 @@ import * as statsService from '@/services/statsService';
 import type { WorkoutStatsSummary, ExerciseFrequency } from '@/services/statsService';
 import { kgToDisplayWeight, weightUnitLabel } from '@/services/unitConversionService';
 import { todayIsoDate, addDays } from '@/utils/dateUtils';
+import { ensureMinimumElapsed } from '@/utils/timing';
 import type { ChartPoint } from '@/types/entities';
 
 type RangeFilter = '30d' | '90d' | 'all';
@@ -27,13 +28,21 @@ export function WorkoutStatisticsScreen() {
 
   const load = useCallback(async () => {
     if (!user) return;
+    const start = Date.now();
     const today = todayIsoDate();
     const dateFrom = range === '30d' ? addDays(today, -30) : range === '90d' ? addDays(today, -90) : EARLIEST_DATE;
 
-    setSummary(await statsService.getWorkoutStatsSummary(user.id, dateFrom, today));
-    setVolumePoints(await statsService.getWorkoutFrequencyOverTime(user.id, dateFrom, today, 'week'));
-    setPrPoints(await statsService.getPrCountOverTime(user.id, dateFrom, today));
-    setMostTrained(await statsService.getMostTrainedExercises(user.id, dateFrom, today, 5));
+    const [summaryResult, volume, pr, trained] = await Promise.all([
+      statsService.getWorkoutStatsSummary(user.id, dateFrom, today),
+      statsService.getWorkoutFrequencyOverTime(user.id, dateFrom, today, 'week'),
+      statsService.getPrCountOverTime(user.id, dateFrom, today),
+      statsService.getMostTrainedExercises(user.id, dateFrom, today, 5),
+    ]);
+    await ensureMinimumElapsed(start);
+    setSummary(summaryResult);
+    setVolumePoints(volume);
+    setPrPoints(pr);
+    setMostTrained(trained);
   }, [user, range]);
 
   useFocusEffect(

@@ -7,6 +7,7 @@ import { SkeletonListRow } from '@/components/common/SkeletonListRow';
 import { AnimatedPressable } from '@/components/common/AnimatedPressable';
 import { useUserStore } from '@/state/userStore';
 import * as templateRepository from '@/db/repositories/templateRepository';
+import { ensureMinimumElapsed } from '@/utils/timing';
 import type { CustomWorkoutTemplate } from '@/types/entities';
 
 export function TemplateListScreen({ navigation }: any) {
@@ -17,7 +18,9 @@ export function TemplateListScreen({ navigation }: any) {
   const load = useCallback(async () => {
     if (!user) return;
     setLoading(true);
+    const start = Date.now();
     setTemplates(await templateRepository.listTemplates(user.id));
+    await ensureMinimumElapsed(start);
     setLoading(false);
   }, [user]);
 

@@ -8,6 +8,7 @@ import { AnimatedPressable } from '@/components/common/AnimatedPressable';
 import { useUserStore } from '@/state/userStore';
 import * as statsService from '@/services/statsService';
 import type { RecentActivityEntry } from '@/services/statsService';
+import { ensureMinimumElapsed } from '@/utils/timing';
 import {
   metersToDisplayDistance,
   distanceUnitLabel,
@@ -24,7 +25,9 @@ export function RecentActivityScreen({ navigation }: any) {
   const load = useCallback(async () => {
     if (!user) return;
     setLoading(true);
+    const start = Date.now();
     setActivity(await statsService.getRecentActivity(user.id, 40));
+    await ensureMinimumElapsed(start);
     setLoading(false);
   }, [user]);
 

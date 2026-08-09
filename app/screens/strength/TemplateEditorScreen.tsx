@@ -5,6 +5,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
 import { FormField } from '@/components/forms/FormField';
 import { Button } from '@/components/common/Button';
+import { AnimatedPressable } from '@/components/common/AnimatedPressable';
 import { useUserStore } from '@/state/userStore';
 import * as templateRepository from '@/db/repositories/templateRepository';
 import * as exerciseRepository from '@/db/repositories/exerciseRepository';
@@ -174,9 +175,9 @@ export function TemplateEditorScreen({ route, navigation }: any) {
               keyExtractor={(item) => item.id}
               style={{ marginTop: spacing.lg }}
               renderItem={({ item }) => (
-                <Pressable style={styles.pickerRow} onPress={() => handlePickExercise(item.id)}>
+                <AnimatedPressable style={styles.pickerRow} onPress={() => handlePickExercise(item.id)}>
                   <Text style={type.body}>{item.name}</Text>
-                </Pressable>
+                </AnimatedPressable>
               )}
             />
           )}

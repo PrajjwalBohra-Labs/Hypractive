@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import { View, Text, FlatList, Pressable, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type } from '@/theme/tokens';
 import { EmptyState } from '@/components/lists/EmptyState';
 import { SkeletonListRow } from '@/components/common/SkeletonListRow';
+import { AnimatedPressable } from '@/components/common/AnimatedPressable';
 import { useUserStore } from '@/state/userStore';
 import * as statsService from '@/services/statsService';
 import type { RecentActivityEntry } from '@/services/statsService';
@@ -60,7 +61,7 @@ export function RecentActivityScreen({ navigation }: any) {
           data={activity}
           keyExtractor={(item) => `${item.type}-${item.id}`}
           renderItem={({ item }) => (
-            <Pressable style={styles.row} onPress={() => openActivity(item)}>
+            <AnimatedPressable style={styles.row} onPress={() => openActivity(item)}>
               <View style={styles.rowHeader}>
                 <Text style={type.caption}>{item.type === 'run' ? 'ESCAPE' : 'DECAY DELAYED'}</Text>
                 <Text style={type.caption}>{item.date}</Text>
@@ -74,7 +75,7 @@ export function RecentActivityScreen({ navigation }: any) {
                   {item.exerciseCount} exercises · {Math.round(kgToDisplayWeight(item.totalVolumeKg, unit))} {weightUnitLabel(unit)}
                 </Text>
               )}
-            </Pressable>
+            </AnimatedPressable>
           )}
         />
       )}

@@ -4,6 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
 import { EmptyState } from '@/components/lists/EmptyState';
 import { SkeletonListRow } from '@/components/common/SkeletonListRow';
+import { AnimatedPressable } from '@/components/common/AnimatedPressable';
 import { useUserStore } from '@/state/userStore';
 import * as templateRepository from '@/db/repositories/templateRepository';
 import type { CustomWorkoutTemplate } from '@/types/entities';
@@ -48,9 +49,9 @@ export function TemplateListScreen({ navigation }: any) {
           data={templates}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Pressable style={styles.row} onPress={() => navigation.navigate('TemplateDetail', { templateId: item.id })}>
+            <AnimatedPressable style={styles.row} onPress={() => navigation.navigate('TemplateDetail', { templateId: item.id })}>
               <Text style={type.body}>{item.name}</Text>
-            </Pressable>
+            </AnimatedPressable>
           )}
         />
       )}

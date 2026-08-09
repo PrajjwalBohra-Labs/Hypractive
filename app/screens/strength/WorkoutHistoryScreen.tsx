@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import { View, Text, FlatList, Pressable, TextInput, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TextInput, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type } from '@/theme/tokens';
 import { EmptyState } from '@/components/lists/EmptyState';
 import { SkeletonListRow } from '@/components/common/SkeletonListRow';
+import { AnimatedPressable } from '@/components/common/AnimatedPressable';
 import { NO_WORKOUTS_LINES, pickRandom } from '@/content/roastCopy';
 import { useUserStore } from '@/state/userStore';
 import * as workoutSessionRepository from '@/db/repositories/workoutSessionRepository';
@@ -67,7 +68,7 @@ export function WorkoutHistoryScreen({ navigation }: any) {
           keyExtractor={(item) => item.session.id}
           contentContainerStyle={{ paddingBottom: spacing.xxl }}
           renderItem={({ item }) => (
-            <Pressable
+            <AnimatedPressable
               style={styles.row}
               onPress={() => navigation.navigate('WorkoutSessionDetail', { sessionId: item.session.id })}
             >
@@ -78,7 +79,7 @@ export function WorkoutHistoryScreen({ navigation }: any) {
               <Text style={type.caption}>
                 {item.summary.totalSets} sets · {Math.round(item.summary.totalVolumeKg)}kg total volume
               </Text>
-            </Pressable>
+            </AnimatedPressable>
           )}
         />
       )}

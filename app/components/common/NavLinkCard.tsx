@@ -1,6 +1,8 @@
 import React from 'react';
-import { Pressable, View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, radius, type } from '@/theme/tokens';
+import { AnimatedPressable } from '@/components/common/AnimatedPressable';
 
 interface NavLinkCardProps {
   label: string;
@@ -11,18 +13,21 @@ interface NavLinkCardProps {
 /** Minimum 48px touch target. */
 export function NavLinkCard({ label, subtitle, onPress }: NavLinkCardProps) {
   return (
-    <Pressable style={styles.card} onPress={onPress}>
-      <View style={{ flex: 1 }}>
-        <Text style={type.subtitle}>{label}</Text>
-        <Text style={[type.bodyMuted, { marginTop: 2 }]}>{subtitle}</Text>
+    <AnimatedPressable style={styles.card} onPress={onPress}>
+      <View style={styles.row}>
+        <View style={{ flex: 1 }}>
+          <Text style={type.subtitle}>{label}</Text>
+          <Text style={[type.bodyMuted, { marginTop: 2 }]}>{subtitle}</Text>
+        </View>
+        <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
       </View>
-      <Text style={styles.chevron}>{'\u203A'}</Text>
-    </Pressable>
+    </AnimatedPressable>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
+  card: { marginBottom: spacing.md },
+  row: {
     flexDirection: 'row',
     alignItems: 'center',
     minHeight: 64,
@@ -32,11 +37,5 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
-    marginBottom: spacing.md,
-  },
-  chevron: {
-    fontSize: 22,
-    color: colors.textMuted,
-    marginLeft: spacing.sm,
   },
 });

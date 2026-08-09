@@ -4,6 +4,7 @@ import { View, Text, FlatList, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type } from '@/theme/tokens';
 import { Button } from '@/components/common/Button';
+import { AnimatedPressable } from '@/components/common/AnimatedPressable';
 import { RoastCard } from '@/components/common/RoastCard';
 import { useUserStore } from '@/state/userStore';
 import * as runSessionRepository from '@/db/repositories/runSessionRepository';
@@ -64,7 +65,7 @@ function RunningDashboardScreen({ navigation }: any) {
           data={recentRuns}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Pressable
+            <AnimatedPressable
               style={styles.row}
               onPress={() => navigation.navigate('RunSessionDetail', { runSessionId: item.id })}
             >
@@ -72,7 +73,7 @@ function RunningDashboardScreen({ navigation }: any) {
               <Text style={type.bodyMuted}>
                 {metersToDisplayDistance(item.distanceM, unit).toFixed(2)} {distanceUnitLabel(unit)} · {formatPace(item.avgPaceSPerKm, unit)}
               </Text>
-            </Pressable>
+            </AnimatedPressable>
           )}
         />
       )}

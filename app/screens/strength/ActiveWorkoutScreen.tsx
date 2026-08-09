@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, Pressable, Modal, FlatList, StyleSheet, Alert } from 'react-native';
+import { View, Text, ScrollView, Modal, FlatList, StyleSheet, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
 import { Button } from '@/components/common/Button';
+import { AnimatedPressable } from '@/components/common/AnimatedPressable';
 import { NumericInput } from '@/components/forms/NumericInput';
 import { RestTimerModal } from '@/components/timer/RestTimerModal';
 import { useUserStore } from '@/state/userStore';
@@ -167,9 +168,9 @@ export function ActiveWorkoutScreen({ route, navigation }: any) {
             data={libraryExercises.filter((e) => !store.exerciseIds.includes(e.id))}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <Pressable style={styles.pickerRow} onPress={() => handleAddExercise(item)}>
+              <AnimatedPressable style={styles.pickerRow} onPress={() => handleAddExercise(item)}>
                 <Text style={type.body}>{item.name}</Text>
-              </Pressable>
+              </AnimatedPressable>
             )}
           />
           <Button label="Cancel" variant="secondary" onPress={() => setPickerVisible(false)} style={{ marginTop: spacing.lg }} />

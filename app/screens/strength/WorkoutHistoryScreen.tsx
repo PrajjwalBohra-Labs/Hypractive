@@ -9,6 +9,7 @@ import { NO_WORKOUTS_LINES, pickRandom } from '@/content/roastCopy';
 import { useUserStore } from '@/state/userStore';
 import * as workoutSessionRepository from '@/db/repositories/workoutSessionRepository';
 import type { WorkoutSessionSummary } from '@/db/repositories/workoutSessionRepository';
+import { ensureMinimumElapsed } from '@/utils/timing';
 import type { WorkoutSession } from '@/types/entities';
 
 interface RowData {
@@ -26,6 +27,7 @@ export function WorkoutHistoryScreen({ navigation }: any) {
   const load = useCallback(async () => {
     if (!user) return;
     setLoading(true);
+    const start = Date.now();
     const sessions = search
       ? await workoutSessionRepository.searchSessionsByExerciseName(user.id, search)
       : await workoutSessionRepository.listSessions(user.id);
@@ -35,6 +37,7 @@ export function WorkoutHistoryScreen({ navigation }: any) {
       withSummaries.push({ session, summary });
     }
     setRows(withSummaries);
+    await ensureMinimumElapsed(start);
     setLoading(false);
   }, [user, search]);
 

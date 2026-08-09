@@ -11,6 +11,7 @@ import * as statsService from '@/services/statsService';
 import type { RunningStatsSummary } from '@/services/statsService';
 import { metersToDisplayDistance, distanceUnitLabel, formatPace } from '@/services/unitConversionService';
 import { todayIsoDate, addDays } from '@/utils/dateUtils';
+import { ensureMinimumElapsed } from '@/utils/timing';
 import type { ChartPoint } from '@/types/entities';
 
 type RangeFilter = '30d' | '90d' | 'all';
@@ -26,12 +27,19 @@ export function RunningStatisticsScreen() {
 
   const load = useCallback(async () => {
     if (!user) return;
+    const start = Date.now();
     const today = todayIsoDate();
     const dateFrom = range === '30d' ? addDays(today, -30) : range === '90d' ? addDays(today, -90) : EARLIEST_DATE;
 
-    setSummary(await statsService.getRunningStatsSummary(user.id, dateFrom, today));
-    setPacePoints(await statsService.getPaceOverTime(user.id, dateFrom, today));
-    setDistancePoints(await statsService.getDistanceOverTime(user.id, dateFrom, today, 'week'));
+    const [runningSummary, pace, distance] = await Promise.all([
+      statsService.getRunningStatsSummary(user.id, dateFrom, today),
+      statsService.getPaceOverTime(user.id, dateFrom, today),
+      statsService.getDistanceOverTime(user.id, dateFrom, today, 'week'),
+    ]);
+    await ensureMinimumElapsed(start);
+    setSummary(runningSummary);
+    setPacePoints(pace);
+    setDistancePoints(distance);
   }, [user, range]);
 
   useFocusEffect(

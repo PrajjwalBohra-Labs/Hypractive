@@ -4,8 +4,10 @@ import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
 import { EmptyState } from '@/components/lists/EmptyState';
 import { SkeletonListRow } from '@/components/common/SkeletonListRow';
+import { AnimatedPressable } from '@/components/common/AnimatedPressable';
 import { useUserStore } from '@/state/userStore';
 import * as exerciseRepository from '@/db/repositories/exerciseRepository';
+import { ensureMinimumElapsed } from '@/utils/timing';
 import type { Exercise } from '@/types/entities';
 
 export function ExerciseLibraryListScreen({ navigation }: any) {
@@ -17,8 +19,10 @@ export function ExerciseLibraryListScreen({ navigation }: any) {
   const load = useCallback(async () => {
     if (!user) return;
     setLoading(true);
+    const start = Date.now();
     const rows = await exerciseRepository.listExercises(user.id, { search: search || undefined });
     setExercises(rows);
+    await ensureMinimumElapsed(start);
     setLoading(false);
   }, [user, search]);
 
@@ -64,7 +68,7 @@ export function ExerciseLibraryListScreen({ navigation }: any) {
           keyExtractor={(item) => item.id}
           contentContainerStyle={{ paddingBottom: spacing.xxl }}
           renderItem={({ item }) => (
-            <Pressable
+            <AnimatedPressable
               style={styles.row}
               onPress={() => navigation.navigate('ExerciseDetail', { exerciseId: item.id })}
             >
@@ -76,7 +80,7 @@ export function ExerciseLibraryListScreen({ navigation }: any) {
                   </Text>
                 )}
               </View>
-            </Pressable>
+            </AnimatedPressable>
           )}
         />
       )}

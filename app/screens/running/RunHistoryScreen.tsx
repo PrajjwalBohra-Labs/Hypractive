@@ -3,6 +3,7 @@ import { View, Text, FlatList, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, radius, type } from '@/theme/tokens';
 import { EmptyState } from '@/components/lists/EmptyState';
+import { AnimatedPressable } from '@/components/common/AnimatedPressable';
 import { NO_RUNS_LINES, pickRandom } from '@/content/roastCopy';
 import { useUserStore } from '@/state/userStore';
 import * as runSessionRepository from '@/db/repositories/runSessionRepository';
@@ -60,7 +61,7 @@ export function RunHistoryScreen({ navigation }: any) {
           keyExtractor={(item) => item.id}
           contentContainerStyle={{ paddingBottom: spacing.xxl }}
           renderItem={({ item }) => (
-            <Pressable
+            <AnimatedPressable
               style={styles.row}
               onPress={() => navigation.navigate('RunSessionDetail', { runSessionId: item.id })}
             >
@@ -68,7 +69,7 @@ export function RunHistoryScreen({ navigation }: any) {
               <Text style={type.bodyMuted}>
                 {metersToDisplayDistance(item.distanceM, unit).toFixed(2)} {distanceUnitLabel(unit)} · {formatPace(item.avgPaceSPerKm, unit)}
               </Text>
-            </Pressable>
+            </AnimatedPressable>
           )}
         />
       )}

@@ -72,7 +72,7 @@ export function RestTimerPresetsScreen() {
           renderItem={({ item }) => (
             <View style={styles.row}>
               <Text style={type.body}>{item.label} — {item.durationS}s</Text>
-              <Pressable onPress={() => handleDelete(item.id)} style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Pressable onPress={() => handleDelete(item.id)} hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }} style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Ionicons name="close-circle-outline" size={16} color={colors.textPrimary} />
                 <Text style={{ color: colors.textPrimary, fontFamily: fonts.semibold, marginLeft: 4 }}>Delete</Text>
               </Pressable>

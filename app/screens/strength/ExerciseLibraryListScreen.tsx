@@ -91,7 +91,7 @@ export function ExerciseLibraryListScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background, padding: spacing.lg },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing.lg },
-  addButton: { backgroundColor: colors.accent, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, borderRadius: radius.pill },
+  addButton: { backgroundColor: colors.accent, minHeight: 48, justifyContent: 'center', paddingHorizontal: spacing.lg, paddingVertical: spacing.sm, borderRadius: radius.pill },
   addButtonText: { color: colors.background, fontFamily: fonts.bold },
   search: {
     backgroundColor: colors.surface,

@@ -130,9 +130,9 @@ export function TemplateEditorScreen({ route, navigation }: any) {
           <View style={styles.exerciseRowHeader}>
             <Text style={type.body}>{exerciseNames[entry.exerciseId] ?? '\u2026'}</Text>
             <View style={styles.rowActions}>
-              <Pressable onPress={() => handleMove(index, -1)}><Ionicons name="chevron-up-circle-outline" size={20} color={colors.textSecondary} /></Pressable>
-              <Pressable onPress={() => handleMove(index, 1)}><Ionicons name="chevron-down-circle-outline" size={20} color={colors.textSecondary} /></Pressable>
-              <Pressable onPress={() => handleRemoveEntry(entry.id)} style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Pressable onPress={() => handleMove(index, -1)} hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}><Ionicons name="chevron-up-circle-outline" size={20} color={colors.textSecondary} /></Pressable>
+              <Pressable onPress={() => handleMove(index, 1)} hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}><Ionicons name="chevron-down-circle-outline" size={20} color={colors.textSecondary} /></Pressable>
+              <Pressable onPress={() => handleRemoveEntry(entry.id)} hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }} style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Ionicons name="close-circle-outline" size={16} color={colors.textPrimary} />
                 <Text style={{ color: colors.textPrimary, fontFamily: fonts.semibold, marginLeft: 4 }}>Remove</Text>
               </Pressable>

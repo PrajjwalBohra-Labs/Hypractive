@@ -133,6 +133,8 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background },
   filterRow: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.lg },
   filterButton: {
+    flex: 1,
+    minHeight: 48,
     paddingVertical: spacing.sm,
     paddingHorizontal: spacing.md,
     borderRadius: radius.pill,

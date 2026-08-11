@@ -6,7 +6,7 @@
  * polish choice -- it adds a small artificial delay in exchange for the
  * loading state actually being perceivable.
  */
-export async function ensureMinimumElapsed(startTime: number, minMs: number = 400): Promise<void> {
+export async function ensureMinimumElapsed(startTime: number, minMs: number = 900): Promise<void> {
   const elapsed = Date.now() - startTime;
   const remaining = minMs - elapsed;
   if (remaining > 0) {

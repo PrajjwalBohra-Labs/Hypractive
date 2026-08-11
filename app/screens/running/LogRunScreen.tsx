@@ -141,7 +141,7 @@ export function LogRunScreen({ navigation }: any) {
                   onChangeText={(v) => updateSplitRow(split.key, 'seconds', v)}
                 />
               </View>
-              <Pressable onPress={() => removeSplitRow(split.key)} style={styles.removeRow}>
+              <Pressable onPress={() => removeSplitRow(split.key)} hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }} style={styles.removeRow}>
                 <Ionicons name="close-circle-outline" size={16} color={colors.textPrimary} />
                 <Text style={{ color: colors.textPrimary, fontFamily: fonts.semibold, marginLeft: 4 }}>Remove split</Text>
               </Pressable>

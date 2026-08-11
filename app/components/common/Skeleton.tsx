@@ -12,13 +12,13 @@ interface SkeletonProps {
 /** A single pulsing placeholder box. Compose these into shapes that
  * match the real content (see SkeletonListRow, SkeletonStatCard). */
 export function Skeleton({ width = '100%', height = 16, borderRadius: cornerRadius = radius.sm, style }: SkeletonProps) {
-  const opacity = useRef(new Animated.Value(0.4)).current;
+  const opacity = useRef(new Animated.Value(0.55)).current;
 
   useEffect(() => {
     const loop = Animated.loop(
       Animated.sequence([
-        Animated.timing(opacity, { toValue: 1, duration: 700, useNativeDriver: true }),
-        Animated.timing(opacity, { toValue: 0.4, duration: 700, useNativeDriver: true }),
+        Animated.timing(opacity, { toValue: 1, duration: 600, useNativeDriver: true }),
+        Animated.timing(opacity, { toValue: 0.55, duration: 600, useNativeDriver: true }),
       ])
     );
     loop.start();
@@ -28,7 +28,7 @@ export function Skeleton({ width = '100%', height = 16, borderRadius: cornerRadi
   return (
     <Animated.View
       style={[
-        { width, height, borderRadius: cornerRadius, backgroundColor: colors.surfaceRaised, opacity },
+        { width, height, borderRadius: cornerRadius, backgroundColor: colors.textMuted, opacity },
         style,
       ]}
     />

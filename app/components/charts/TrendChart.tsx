@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, useWindowDimensions, StyleSheet } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { colors, spacing, radius, type } from '@/theme/tokens';
 import { computeTrend, trendLinePoints } from '@/services/trendService';
@@ -13,9 +13,8 @@ interface TrendChartProps {
   formatX?: (x: string) => string;
 }
 
-const screenWidth = Dimensions.get('window').width;
-
 export function TrendChart({ points, yLabel, showTrendLine, formatY, formatX }: TrendChartProps) {
+  const { width: screenWidth } = useWindowDimensions();
   if (points.length < 2) {
     return (
       <View style={styles.emptyContainer}>

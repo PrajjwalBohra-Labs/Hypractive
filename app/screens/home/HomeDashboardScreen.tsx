@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, spacing, type } from '@/theme/tokens';
 import { Button } from '@/components/common/Button';
 import { RoastCard } from '@/components/common/RoastCard';
@@ -13,10 +14,11 @@ import { useUserStore } from '@/state/userStore';
  */
 export function HomeDashboardScreen({ navigation }: any) {
   const user = useUserStore((s) => s.user);
+  const insets = useSafeAreaInsets();
   if (!user) return null;
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{ padding: spacing.lg, paddingBottom: spacing.xxl }}>
+    <ScrollView style={styles.container} contentContainerStyle={{ padding: spacing.lg, paddingTop: insets.top + spacing.lg, paddingBottom: spacing.xxl }}>
       <Text style={type.display}>{`Ah yes, ${user.displayName}. Your excuses are waiting.`}</Text>
 
       <View style={styles.actions}>

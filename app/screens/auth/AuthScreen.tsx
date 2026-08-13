@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
 import { FormField } from '@/components/forms/FormField';
 import { Button } from '@/components/common/Button';
@@ -9,6 +10,7 @@ import type { UnitPreference } from '@/types/entities';
 type Mode = 'signup' | 'login';
 
 export function AuthScreen() {
+  const insets = useSafeAreaInsets();
   const signUp = useUserStore((s) => s.signUp);
   const logIn = useUserStore((s) => s.logIn);
 
@@ -37,7 +39,7 @@ export function AuthScreen() {
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{ padding: spacing.xl, paddingTop: spacing.xxl * 1.5 }}>
+    <ScrollView style={styles.container} contentContainerStyle={{ padding: spacing.xl, paddingTop: insets.top + spacing.xl }}>
       <Text style={type.display}>Hypractive</Text>
       <Text style={[type.bodyMuted, { marginTop: spacing.xs, marginBottom: spacing.xl }]}>
         {mode === 'signup' ? 'Create your account to get started.' : 'Welcome back.'}

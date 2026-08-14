@@ -119,12 +119,12 @@ export function SettingsScreen({ navigation }: any) {
 
       <Card style={{ marginTop: spacing.md }}>
         <Text style={type.eyebrow}>NUTRITION TRACKING</Text>
-        <Text style={[type.bodyMuted, { marginTop: spacing.xs }]}>Coming in a future update.</Text>
+        <Text style={[type.bodyMuted, { marginTop: spacing.xs }]}>Coming in a future versions.</Text>
       </Card>
 
       <Card style={{ marginTop: spacing.md }}>
         <Text style={type.eyebrow}>APP LOCK</Text>
-        <Text style={[type.bodyMuted, { marginTop: spacing.xs }]}>Coming in a future version.</Text>
+        <Text style={[type.bodyMuted, { marginTop: spacing.xs }]}>Coming in a future versions.</Text>
       </Card>
 
       <Card style={{ marginTop: spacing.md }}>

@@ -1,48 +1,57 @@
 # Hypractive
 
-**New here? Start with `SETUP.md`** — step-by-step install and run instructions.
+A simple, local-first fitness app for tracking workouts and runs. Everything stays on your phone, no account, no cloud sync, just you and your fitness data.
 
-**Want the full design?** See `ARCHITECTURE.md` — product spec, data model,
-screen map, and the phased build plan this project follows. (Note: written
-under the project's original working name; content still applies, naming
-in that doc hasn't been fully swept for the rebrand yet.)
+## About
 
-## Build status
+Hypractive is a mobile fitness app designed to help you track and optimize your workouts and running activities. Whether you're hitting the gym or logging miles on the road, Hypractive gives you the tools to log exercises, monitor your progress, and watch yourself get stronger over time.
 
-Delivery 8 — rebrand to Hypractive: pearl-white/dark-black visual redesign,
-Urbanist typeface, local (cosmetic, no-backend) email/password login, About
-screen, Nutrition Tracking placeholder.
+The app tracks your personal records, analyzes your running pace, and shows you trends through charts so you can see real progress. You can save your favorite workout templates, use the built-in rest timer between sets, and export your data for backup or analysis. Everything stays on your phone, no account or internet required, just solid local tracking that you control completely.
 
-**12 of 13 required modules built** (Running Plans still deferred, as planned).
+Built with a focus on clarity and simplicity, Hypractive cuts through the noise with a clean two-tone design and straightforward functionality. It's your personal fitness companion, nothing more, nothing less.
 
-### What's new this delivery
-- Full visual redesign: strict two-tone pearl-white/dark-black palette,
-  no third accent color anywhere — functional states (form errors,
-  progressive-overload deltas, destructive actions) now use symbols and
-  weight instead of color
-- Urbanist typeface throughout (Google Fonts, SIL Open Font License)
-- Glossy gradient touches on primary buttons and headline stat cards
-- Local email/password Sign Up / Log In / Log Out — genuinely local only,
-  no backend, no password recovery; this is disclosed plainly in the new
-  About screen so it's never misleading
-- About screen (Settings → About Hypractive)
-- Nutrition Tracking placeholder (Settings) — not built, just flagged as upcoming
+## What's included
 
-### Still working (built in earlier deliveries)
-Exercise Library, Custom Workout Templates, Active Workout logging with
-Progressive Overload, Rest Timer, Exercise History + PR detection,
-Run/Workout History, Log Run with Pace/Running Analysis, Running &
-Workout Statistics with Progress Charts, Backup Export/Import.
+- **Exercise Tracking**: Log workouts with sets, reps, and weight; track your personal records automatically
+- **Running Analysis**: Track pace, distance, and time; get running statistics and trends
+- **Progressive Overload**: See when you've lifted more weight or done more reps than before
+- **Workout Templates**: Save your favorite workouts and reuse them with one tap
+- **Rest Timer**: Configurable rest timer between sets to keep your workout flowing
+- **History & Stats**: View past workouts, runs, and detailed statistics with progress charts
+- **Backup & Export**: Export your data for safekeeping or analysis elsewhere
+- **Clean Design**: Two-tone pearl-white/dark-black interface with Urbanist typeface
 
-### Not yet built
-Running Plans, app-lock, Workout Programs, repository-level test coverage
-(calculation logic is tested; DB read/write isn't), the final `.apk` build
-(deliberately saved for last).
+## Technical
 
-## Everyday commands
+Hypractive is built as a React Native app using TypeScript, ensuring type safety and a smooth development experience. Here's what powers it:
 
-```
+**Tech Stack:**
+- **React Native**: cross-platform mobile framework
+- **TypeScript**: for type-safe code and better developer experience
+- **SQLite**: local database for storing workouts, exercises, and personal records
+- **Zustand**: lightweight state management for app state
+- **React Navigation**: native navigation handling across screens
+
+**Architecture:**
+The app is organized into clear layers: screens for UI, services for business logic, repositories for database access, and a state layer for global app state. This separation makes it easy to test, maintain, and add new features. Navigation is handled through stack-based routing, keeping the user flow intuitive and predictable.
+
+**Testing:**
+We test the core calculation logic and services to make sure everything works reliably. The test suite covers exercises, running analysis, progressive overload calculations, and data import/export.
+
+## Current build status
+
+Delivery 8: rebrand to Hypractive with pearl-white/dark-black visual redesign, Urbanist typeface, local email/password login, and About screen.
+
+**12 of 13 modules complete.** Running Plans are deferred as planned. The only major feature not yet built is app-lock, workout programs, and the final `.apk` build.
+
+## Getting started
+
+**New here?** Start with [`SETUP.md`](SETUP.md) — step-by-step install and run instructions...
+
+### Everyday commands
+
+```bash
 npm start          # run the app
-npm test            # run the test suite
-npm run typecheck   # check TypeScript types
+npm test           # run the test suite
+npm run typecheck  # check TypeScript types
 ```

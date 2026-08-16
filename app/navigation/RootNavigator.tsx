@@ -1,9 +1,9 @@
-import React from 'react';
+﻿import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
-import { Ionicons } from '@expo/vector-icons';
 import { colors } from '@/theme/tokens';
+import { AnimatedTabIcon } from '@/components/common/AnimatedTabIcon';
 import { HomeStackNavigator } from './HomeStackNavigator';
 import { RunningStackNavigator } from './RunningStackNavigator';
 import { StrengthStackNavigator } from './StrengthStackNavigator';
@@ -12,9 +12,9 @@ import { SettingsStackNavigator } from './SettingsStackNavigator';
 const Tab = createBottomTabNavigator();
 
 const navTheme = {
-  ...DefaultTheme,
+  ...DarkTheme,
   colors: {
-    ...DefaultTheme.colors,
+    ...DarkTheme.colors,
     background: colors.background,
     card: colors.surface,
     border: colors.border,
@@ -31,7 +31,7 @@ export function RootNavigator() {
           headerShown: false,
           tabBarStyle: { backgroundColor: 'transparent', borderTopColor: colors.border },
           tabBarBackground: () => (
-            <BlurView intensity={80} tint="light" style={{ flex: 1, backgroundColor: colors.glassTint }} />
+            <BlurView intensity={80} tint="dark" style={{ flex: 1, backgroundColor: colors.glassTint }} />
           ),
           tabBarActiveTintColor: colors.accent,
           tabBarInactiveTintColor: colors.textMuted,
@@ -43,7 +43,7 @@ export function RootNavigator() {
           options={{
             tabBarLabel: 'The Void',
             tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons name={focused ? 'moon' : 'moon-outline'} size={size} color={color} />
+              <AnimatedTabIcon name={focused ? 'moon' : 'moon-outline'} size={size} color={color} focused={focused} />
             ),
           }}
         />
@@ -53,7 +53,7 @@ export function RootNavigator() {
           options={{
             tabBarLabel: 'Escape Consequences',
             tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons name={focused ? 'footsteps' : 'footsteps-outline'} size={size} color={color} />
+              <AnimatedTabIcon name={focused ? 'footsteps' : 'footsteps-outline'} size={size} color={color} focused={focused} />
             ),
           }}
         />
@@ -63,7 +63,7 @@ export function RootNavigator() {
           options={{
             tabBarLabel: 'Gravity Negotiations',
             tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons name={focused ? 'barbell' : 'barbell-outline'} size={size} color={color} />
+              <AnimatedTabIcon name={focused ? 'barbell' : 'barbell-outline'} size={size} color={color} focused={focused} />
             ),
           }}
         />
@@ -74,7 +74,7 @@ export function RootNavigator() {
             title: 'Self-Sabotage',
             tabBarLabel: 'Self-Sabotage',
             tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons name={focused ? 'settings' : 'settings-outline'} size={size} color={color} />
+              <AnimatedTabIcon name={focused ? 'settings' : 'settings-outline'} size={size} color={color} focused={focused} />
             ),
           }}
         />

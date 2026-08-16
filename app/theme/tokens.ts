@@ -9,17 +9,17 @@
  */
 
 export const colors = {
-  background: '#0B0D10', // Deep Black — primary background
-  surface: '#171C22', // Dark Charcoal — cards, elevated surfaces
-  surfaceRaised: '#1C212A', // input fields — between surface and border
-  border: '#2A333D', // Slate — borders, dividers, chart grids
-  textPrimary: '#E7EEF5', // Pale Blue-White — important text, numbers, active state
-  textSecondary: '#5D6F82', // Muted Blue-Gray — secondary text, inactive icons
-  textMuted: '#46525E', // dimmest tier — least emphasis
-  accent: '#E7EEF5', // primary buttons / active state — same as textPrimary, inverted on fill
-  accentPressed: '#C7D2DC', // pressed/dimmed variant of accent
+  background: '#f7f1de', // Deep Black — primary background
+  surface: '#b0ba99', // Dark Charcoal — cards, elevated surfaces
+  surfaceRaised: '#f1dec4', // input fields — between surface and border
+  border: '#813819', // Slate — borders, dividers, chart grids
+  textPrimary: '#000000', // Pale Blue-White — important text, numbers, active state
+  textSecondary: '#39180b', // Muted Blue-Gray — secondary text, inactive icons
+  textMuted: '#ffffff', // dimmest tier — least emphasis
+  accent: '#4d372c', // primary buttons / active state — same as textPrimary, inverted on fill
+  accentPressed: '#000000', // pressed/dimmed variant of accent
   sheen: 'rgba(231, 238, 245, 0.06)', // translucent light — gloss hairlines only, never text
-  glassTint: 'rgba(11, 13, 16, 0.7)', // translucent background — blur overlays only
+  glassTint: 'rgba(146, 80, 33, 0.61)', // translucent background — blur overlays only
 } as const;
 
 export const spacing = {

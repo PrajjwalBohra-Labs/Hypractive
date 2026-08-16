@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+﻿import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -74,7 +74,7 @@ export default function App() {
     );
   }
 
-  // fontError is non-fatal — the app still renders with a system font
+  // fontError is non-fatal â€” the app still renders with a system font
   // fallback rather than getting stuck on a blank/loading screen forever.
   if (loading || !appReady) {
     return (
@@ -87,7 +87,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar style="dark" />
+        <StatusBar style="light" />
         {user ? <RootNavigator /> : <AuthScreen />}
       </GestureHandlerRootView>
     </SafeAreaProvider>

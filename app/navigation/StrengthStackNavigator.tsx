@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, Text, StyleSheet } from 'react-native';
 import { colors, spacing, type } from '@/theme/tokens';
@@ -44,6 +44,7 @@ export function StrengthStackNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
+        animation: 'fade',
         headerStyle: { backgroundColor: colors.background },
         headerTintColor: colors.textPrimary,
         headerShadowVisible: false,

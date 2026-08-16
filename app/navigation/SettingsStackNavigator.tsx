@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { colors } from '@/theme/tokens';
 import { SettingsScreen } from '@/screens/settings/SettingsScreen';
@@ -11,6 +11,7 @@ export function SettingsStackNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
+        animation: 'fade',
         headerStyle: { backgroundColor: colors.background },
         headerTintColor: colors.textPrimary,
         headerShadowVisible: false,

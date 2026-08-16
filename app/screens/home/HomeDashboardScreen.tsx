@@ -19,7 +19,7 @@ export function HomeDashboardScreen({ navigation }: any) {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ padding: spacing.lg, paddingTop: insets.top + spacing.lg, paddingBottom: spacing.xxl }}>
-      <Text style={type.display}>{`Ah yes, ${user.displayName}. Your excuses are waiting.`}</Text>
+      <Text style={type.display}>{`Andddd here comes ${user.displayName}... with the excuses.`}</Text>
 
       <View style={styles.actions}>
         <Button

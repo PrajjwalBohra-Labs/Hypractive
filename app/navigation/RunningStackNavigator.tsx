@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+﻿import React, { useCallback, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, Text, FlatList, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
@@ -71,7 +71,7 @@ function RunningDashboardScreen({ navigation }: any) {
             >
               <Text style={type.body}>{item.date}</Text>
               <Text style={type.bodyMuted}>
-                {metersToDisplayDistance(item.distanceM, unit).toFixed(2)} {distanceUnitLabel(unit)} · {formatPace(item.avgPaceSPerKm, unit)}
+                {metersToDisplayDistance(item.distanceM, unit).toFixed(2)} {distanceUnitLabel(unit)} Â· {formatPace(item.avgPaceSPerKm, unit)}
               </Text>
             </AnimatedPressable>
           )}
@@ -102,6 +102,7 @@ export function RunningStackNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
+        animation: 'fade',
         headerStyle: { backgroundColor: colors.background },
         headerTintColor: colors.textPrimary,
         headerShadowVisible: false,

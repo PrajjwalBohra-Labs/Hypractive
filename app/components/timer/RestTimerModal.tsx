@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, StyleSheet, Pressable, TextInput } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
 import { Button } from '@/components/common/Button';
 import { useTimerStore, getRemainingSeconds } from '@/state/timerStore';
 import { scheduleRestTimerNotification, cancelRestTimerNotification } from '@/services/notificationService';
+import { hapticLight, hapticSuccess } from '@/services/hapticsService';
 import type { RestTimerPreset } from '@/types/entities';
 
 interface RestTimerModalProps {
@@ -24,6 +25,7 @@ export function RestTimerModal({ visible, onClose, presets }: RestTimerModalProp
       const r = getRemainingSeconds(endsAt);
       setRemaining(r);
       if (r === 0) {
+        hapticSuccess();
         stop();
       }
     }, 250);
@@ -31,12 +33,14 @@ export function RestTimerModal({ visible, onClose, presets }: RestTimerModalProp
   }, [isRunning, endsAt, stop]);
 
   const handleStart = async (durationS: number) => {
+    hapticLight();
     start(durationS);
     setRemaining(durationS);
     await scheduleRestTimerNotification(durationS);
   };
 
   const handleStop = async () => {
+    hapticLight();
     await cancelRestTimerNotification();
     stop();
   };
@@ -68,7 +72,7 @@ export function RestTimerModal({ visible, onClose, presets }: RestTimerModalProp
             <>
               {presets.length === 0 ? (
                 <Text style={[type.bodyMuted, { marginVertical: spacing.md }]}>
-                  No presets yet — add one in Settings, or start a custom duration below.
+                  No presets yet â€” add one in Settings, or start a custom duration below.
                 </Text>
               ) : (
                 <View style={styles.presetRow}>

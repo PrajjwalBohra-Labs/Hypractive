@@ -1,6 +1,7 @@
 ﻿import React, { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useReducedMotion } from '@/utils/useReducedMotion';
 
 interface AnimatedTabIconProps {
   name: keyof typeof Ionicons.glyphMap;
@@ -11,15 +12,17 @@ interface AnimatedTabIconProps {
 
 /**
  * Tab bar icon with a barely-noticeable bounce when it becomes the
- * selected tab: 0.95 -> 1.05 -> 1.0. The goal is "that felt good," not
- * "nice animation" -- if you consciously notice it, it's too much.
+ * selected tab: 0.95 -> 1.05 -> 1.0. Fully skipped when the system's
+ * reduce-motion setting is on -- this bounce is purely decorative, so
+ * there's nothing functional lost by turning it off.
  */
 export function AnimatedTabIcon({ name, color, size, focused }: AnimatedTabIconProps) {
   const scale = useRef(new Animated.Value(1)).current;
   const wasFocused = useRef(focused);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
-    if (focused && !wasFocused.current) {
+    if (focused && !wasFocused.current && !reducedMotion) {
       scale.setValue(0.95);
       Animated.sequence([
         Animated.spring(scale, { toValue: 1.05, useNativeDriver: true, speed: 40, bounciness: 6 }),
@@ -27,7 +30,7 @@ export function AnimatedTabIcon({ name, color, size, focused }: AnimatedTabIconP
       ]).start();
     }
     wasFocused.current = focused;
-  }, [focused, scale]);
+  }, [focused, scale, reducedMotion]);
 
   return (
     <Animated.View style={{ transform: [{ scale }] }}>

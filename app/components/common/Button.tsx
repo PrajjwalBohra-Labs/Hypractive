@@ -3,6 +3,7 @@ import { Pressable, Text, View, StyleSheet, ActivityIndicator, ViewStyle, Animat
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing, radius, type, fonts } from '@/theme/tokens';
+import { useReducedMotion } from '@/utils/useReducedMotion';
 
 interface ButtonProps {
   label: string;
@@ -20,6 +21,7 @@ export function Button({ label, onPress, variant = 'primary', icon, disabled, lo
   const isDanger = variant === 'danger';
   const labelColor = isPrimary ? colors.background : colors.textPrimary;
   const scale = useRef(new Animated.Value(1)).current;
+  const reducedMotion = useReducedMotion();
 
   const handlePressIn = () => {
     Animated.spring(scale, { toValue: 0.97, useNativeDriver: true, speed: 50, bounciness: 0 }).start();

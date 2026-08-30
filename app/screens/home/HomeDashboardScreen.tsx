@@ -11,6 +11,8 @@ import { useUserStore } from '@/state/userStore';
 import * as statsService from '@/services/statsService';
 import type { RecentActivityEntry } from '@/services/statsService';
 import { getContextualLine } from '@/content/roastCopy';
+import { StreakIndicator } from '@/components/common/StreakIndicator';
+import { computeStreak, getLast7DaysActivity } from '@/services/streakService';
 import {
   metersToDisplayDistance,
   distanceUnitLabel,
@@ -41,6 +43,8 @@ export function HomeDashboardScreen({ navigation }: any) {
   const [runCount, setRunCount] = useState(0);
   const [workoutCount, setWorkoutCount] = useState(0);
   const [lastActivity, setLastActivity] = useState<RecentActivityEntry | null>(null);
+  const [streakDays, setStreakDays] = useState(0);
+  const [last7Days, setLast7Days] = useState<boolean[]>([false, false, false, false, false, false, false]);
 
   const load = useCallback(async () => {
     if (!user) return;
@@ -54,6 +58,10 @@ export function HomeDashboardScreen({ navigation }: any) {
 
     const recent = await statsService.getRecentActivity(user.id, 1);
     setLastActivity(recent.length > 0 ? recent[0] : null);
+
+    const activeDates = await statsService.getActiveDates(user.id);
+    setStreakDays(computeStreak(activeDates));
+    setLast7Days(getLast7DaysActivity(activeDates));
   }, [user]);
 
   useFocusEffect(
@@ -74,6 +82,7 @@ export function HomeDashboardScreen({ navigation }: any) {
       <FadeUpSection delay={0}>
         <Text style={type.display}>THE VOID</Text>
         <Text style={[type.bodyMuted, { marginTop: spacing.xs }]}>{getContextualLine()}</Text>
+        <StreakIndicator streakDays={streakDays} last7Days={last7Days} />
       </FadeUpSection>
 
       <FadeUpSection delay={80}>

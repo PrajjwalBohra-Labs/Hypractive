@@ -43,3 +43,10 @@ export const ROAST_LINES = [
 export function pickRandom<T>(items: readonly T[]): T {
   return items[Math.floor(Math.random() * items.length)];
 }
+
+export function getContextualLine(): string {
+  const hour = new Date().getHours();
+  if (hour < 12) return 'Good morning. Unfortunately.';
+  if (hour < 18) return 'Still here. Still avoidable.';
+  return 'The day is almost over. So is your excuse.';
+}

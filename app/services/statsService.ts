@@ -249,3 +249,15 @@ export async function getRecentActivity(userId: string, limit: number): Promise<
     .slice(0, limit)
     .map(({ sortKey, ...entry }) => entry as RecentActivityEntry);
 }
+
+/** Every distinct date (across runs and finished workouts) the user did anything at all. Used for streak calculation. */
+export async function getActiveDates(userId: string): Promise<string[]> {
+  const db = await getDb();
+  const rows = await db.getAllAsync<{ date: string }>(
+    `SELECT date FROM run_sessions WHERE user_id = ?
+      UNION
+      SELECT date FROM workout_sessions WHERE user_id = ? AND finished_at IS NOT NULL;`,
+    [userId, userId]
+  );
+  return rows.map((r) => r.date);
+}

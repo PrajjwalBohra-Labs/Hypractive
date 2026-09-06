@@ -1,7 +1,8 @@
-import type { SQLiteDatabase } from 'expo-sqlite';
+﻿import type { SQLiteDatabase } from 'expo-sqlite';
 import { applyMigration002 } from './002_add_login_fields';
+import { applyMigration003 } from './003_add_weekly_goals';
 
-const SCHEMA_VERSION = 2;
+const SCHEMA_VERSION = 3;
 
 const CREATE_STATEMENTS = `
 CREATE TABLE IF NOT EXISTS schema_version (
@@ -190,5 +191,9 @@ export async function runMigrations(db: SQLiteDatabase): Promise<void> {
   if (row.version < 2) {
     await applyMigration002(db);
     await db.runAsync('UPDATE schema_version SET version = 2;');
+  }
+  if (row.version < 3) {
+    await applyMigration003(db);
+    await db.runAsync('UPDATE schema_version SET version = 3;');
   }
 }

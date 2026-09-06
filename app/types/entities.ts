@@ -1,5 +1,5 @@
-/**
- * Entity types — one-to-one with ARCHITECTURE.md section 5.
+﻿/**
+ * Entity types â€” one-to-one with ARCHITECTURE.md section 5.
  * These are the shapes returned by the repository layer (app/db/repositories/*).
  * Booleans are represented as `boolean` here even though SQLite stores them as 0/1;
  * repositories are responsible for the conversion at the boundary.
@@ -16,6 +16,9 @@ export interface User {
   unitPreference: UnitPreference;
   createdAt: string; // ISO date
   appLockEnabled: boolean;
+  weeklyDistanceGoalM: number | null;
+  weeklyVolumeGoalKg: number | null;
+  weeklySessionsGoal: number | null;
 }
 
 export interface FriendGroupMember {
@@ -166,7 +169,7 @@ export interface RestTimerPreset {
   sortOrder: number;
 }
 
-/** Not persisted — a query-config shape, see ARCHITECTURE.md 5.17 */
+/** Not persisted â€” a query-config shape, see ARCHITECTURE.md 5.17 */
 export type ChartDataSource =
   | { kind: 'pace_over_time'; userId: string; dateFrom: string; dateTo: string }
   | { kind: 'distance_over_time'; userId: string; dateFrom: string; dateTo: string; granularity: 'day' | 'week' | 'month' }

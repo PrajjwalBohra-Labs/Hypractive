@@ -1,4 +1,4 @@
-import { getDb } from '@/db/client';
+﻿import { getDb } from '@/db/client';
 import { generateId } from '@/utils/idGenerator';
 import { nowIso } from '@/utils/dateUtils';
 import type { User, UnitPreference } from '@/types/entities';
@@ -13,6 +13,9 @@ function rowToUser(row: any): User {
     unitPreference: row.unit_preference as UnitPreference,
     createdAt: row.created_at,
     appLockEnabled: !!row.app_lock_enabled,
+    weeklyDistanceGoalM: row.weekly_distance_goal_m,
+    weeklyVolumeGoalKg: row.weekly_volume_goal_kg,
+    weeklySessionsGoal: row.weekly_sessions_goal,
   };
 }
 
@@ -70,4 +73,18 @@ export async function updateUnitPreference(userId: string, unitPreference: UnitP
 export async function updateDisplayName(userId: string, displayName: string): Promise<void> {
   const db = await getDb();
   await db.runAsync('UPDATE users SET display_name = ? WHERE id = ?;', [displayName, userId]);
+}
+
+export interface WeeklyGoals {
+  weeklyDistanceGoalM: number | null;
+  weeklyVolumeGoalKg: number | null;
+  weeklySessionsGoal: number | null;
+}
+
+export async function updateWeeklyGoals(userId: string, goals: WeeklyGoals): Promise<void> {
+  const db = await getDb();
+  await db.runAsync(
+    'UPDATE users SET weekly_distance_goal_m = ?, weekly_volume_goal_kg = ?, weekly_sessions_goal = ? WHERE id = ?;',
+    [goals.weeklyDistanceGoalM, goals.weeklyVolumeGoalKg, goals.weeklySessionsGoal, userId]
+  );
 }

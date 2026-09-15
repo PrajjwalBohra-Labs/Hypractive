@@ -35,3 +35,4 @@ npm start          # run the app
 npm test           # run the test suite
 npm run typecheck  # check TypeScript types
 ```
+#### More features will be there in future updates...

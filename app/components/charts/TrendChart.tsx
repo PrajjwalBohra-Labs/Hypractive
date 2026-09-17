@@ -30,7 +30,7 @@ export function TrendChart({ points, yLabel, showTrendLine, formatY, formatX }: 
   const labelEvery = Math.max(1, Math.ceil(points.length / 5));
   const labels = points.map((p, i) => (i % labelEvery === 0 ? (formatX ? formatX(p.x) : p.x.slice(5)) : ''));
 
-  const datasets = [
+  const datasets: Array<{ data: number[]; color: () => string; strokeWidth: number }> = [
     {
       data: points.map((p) => p.y),
       color: () => colors.accent,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, Alert, ScrollView } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import { colors, spacing, radius, type } from '@/theme/tokens';
@@ -36,7 +36,7 @@ export function SettingsScreen({ navigation }: any) {
     } catch (err: any) {
       Alert.alert(
         'Import failed',
-        (err?.message ?? 'Something went wrong.') + ' Nothing was changed — your existing data is untouched.'
+        (err?.message ?? 'Something went wrong.') + ' Nothing was changed â€” your existing data is untouched.'
       );
     } finally {
       setImporting(false);
@@ -60,7 +60,7 @@ export function SettingsScreen({ navigation }: any) {
   };
 
   const handleLogOut = () => {
-    Alert.alert('Log out?', 'You can log back in with your email and password any time — your data stays on this device.', [
+    Alert.alert('Log out?', 'You can log back in with your email and password any time â€” your data stays on this device.', [
       { text: 'Cancel', style: 'cancel' },
       { text: 'Log Out', style: 'destructive', onPress: logOut },
     ]);
@@ -128,7 +128,13 @@ export function SettingsScreen({ navigation }: any) {
       </Card>
 
       <Card style={{ marginTop: spacing.md }}>
-        <Text style={type.eyebrow}>ABOUT</Text>
+        <Text style={type.eyebrow}>ABOUT</Text>        <Button
+          label="Weekly Goals"
+          variant="secondary"
+          onPress={() => navigation.navigate('WeeklyGoals')}
+          style={{ marginBottom: spacing.sm }}
+        />
+
         <Button
           label="Who Built This?"
           variant="secondary"

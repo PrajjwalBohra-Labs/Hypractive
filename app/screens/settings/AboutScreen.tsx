@@ -8,7 +8,7 @@ export function AboutScreen() {
     <ScrollView style={styles.container} contentContainerStyle={{ padding: spacing.lg }}>
       <Text style={type.display}>Hypractive</Text>
       <Text style={[type.bodyMuted, { marginTop: spacing.xs, marginBottom: spacing.xl }]}>
-        Version 0.1.0 
+        Version 1.0.0
         still in denial, like you.
       </Text>
 

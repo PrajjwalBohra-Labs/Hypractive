@@ -107,7 +107,7 @@ export function AuthScreen() {
       />
 
       <Text style={styles.disclaimer}>
-        This account lives only on this device. There's no password recovery or account transfer — it's here to make
+        This account lives only on this device. There's no password recovery or account transfer, it's here to make
         the app feel complete, not as a real security or sync feature. See About for details.
       </Text>
     </ScrollView>

@@ -1,11 +1,6 @@
-# Hypractive
-
-A simple, local-first fitness app for tracking workouts and runs. Everything stays on your phone, no account, no cloud sync, just you and your fitness data.
-
-## About Hypractive
-
-Hypractive is a mobile fitness app designed to help you track and optimize your workouts and running activities. Whether you're hitting the gym or logging miles on the road, Hypractive gives you the tools to log exercises, monitor your progress, and watch yourself get stronger over time.
-
+----
+Hypractive is in a devlopment phase. Here's a brief about - It is a mobile fitness app designed to help you track and optimize your workouts and running activities. Whether you're hitting the gym or logging miles on the road, Hypractive gives you the tools to log exercises, monitor your progress, and watch yourself get stronger over time.
+----
 The app tracks your personal records, analyzes your running pace, and shows you trends through charts so you can see real progress. You can save your favorite workout templates, use the built-in rest timer between sets, and export your data for backup or analysis. Everything stays on your phone, no account or internet required, just solid local tracking that you control completely.
 
 Built with a focus on clarity and simplicity, Hypractive cuts through the noise with a clean two-tone design and straightforward functionality. It's your personal fitness companion, nothing more, nothing less.
